@@ -1,32 +1,35 @@
 package edu.cis232.CheckersSemesterProject;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 
 public class MainController {
 
 	@FXML
 	private GridPane grid;
 
+	Image redChecker = new BetterImage("RedCheckerPiece.png");
+	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
+	private final int COLUMN = 8, ROW = 8;
+	
 	public void initialize() {
+		resetBoard();
+	}
 
-		Image redChecker = new BetterImage("RedCheckerPiece.png");
-		Image blackChecker = new BetterImage("BlackCheckerPiece.png");
-		final int COLUMN = 8, ROW = 8;
-
-		
+	private void resetBoard() {
+		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
 				AnchorPane p = new AnchorPane();
 				ImageView img = new ImageView();
 				img.setFitHeight(90.00);
 				img.setFitWidth(90.00);
-//				p.setMaxSize(size, size);
-	
+				final int row = r, col = c;
 				AnchorPane.setTopAnchor(img, 5.0);
 				AnchorPane.setRightAnchor(img, 5.0);
 				AnchorPane.setBottomAnchor(img, 5.0);
@@ -38,6 +41,14 @@ public class MainController {
 					
 				}else{
 					p.setStyle("-fx-background-color: black");
+					p.setOnMousePressed(new EventHandler <MouseEvent>(){
+						
+						@Override
+						public void handle(MouseEvent arg0) {
+							System.out.printf("%d, %d%n", row, col);
+							
+						}
+					});
 					if(r < 3){
 						img.setImage(blackChecker);
 					}else if(r > 4){
