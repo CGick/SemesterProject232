@@ -7,16 +7,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 
 public class MainController {
 
 	@FXML
 	private GridPane grid;
+	
 
 	Image redChecker = new BetterImage("RedCheckerPiece.png");
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
-	private final int COLUMN = 8, ROW = 8;
 	
+	private final int COLUMN = 8, ROW = 8;
+	private Region selected = null;
 	public void initialize() {
 		resetBoard();
 	}
@@ -44,9 +47,15 @@ public class MainController {
 					p.setOnMousePressed(new EventHandler <MouseEvent>(){
 						
 						@Override
-						public void handle(MouseEvent arg0) {
+						public void handle(MouseEvent evt) {
 							System.out.printf("%d, %d%n", row, col);
-							
+							AnchorPane a = (AnchorPane)evt.getSource();
+							if(selected != null){
+								
+								selected.setStyle("-fx-background-color: black");
+							}
+							a.setStyle("-fx-background-color: #7AFFE7");
+							selected = a;
 						}
 					});
 					if(r < 3){
