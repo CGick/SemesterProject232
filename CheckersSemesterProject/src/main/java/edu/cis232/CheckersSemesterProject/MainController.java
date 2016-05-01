@@ -1,25 +1,68 @@
 package edu.cis232.CheckersSemesterProject;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 public class MainController {
 
-	@FXML
-	private GridPane grid;
-	
+    @FXML
+    private GridPane grid;
 
-	Image redChecker = new BetterImage("RedCheckerPiece.png");
-	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
-	
-	private final int COLUMN = 8, ROW = 8;
-	private Region selected = null;
+    @FXML
+    private VBox player1VBox;
+
+    @FXML
+    private AnchorPane anchPanePlayer1;
+
+    @FXML
+    private Label lblPlayer1Name;
+
+    @FXML
+    private Label lblPlayer1Stats;
+
+    @FXML
+    private VBox player2VBox;
+
+    @FXML
+    private AnchorPane anchPanePlayer2;
+
+    @FXML
+    private Label lblPlayer2Name;
+
+    @FXML
+    private Label lblPlayer2Stats;
+
+    @FXML
+    private MenuItem mnuNewGame;
+
+    @FXML
+    private MenuItem mnuResign;
+    
+    Image redChecker = new BetterImage("RedCheckerPiece.png");
+    Image blackChecker = new BetterImage("BlackCheckerPiece.png");
+    
+    private final int COLUMN = 8, ROW = 8;
+    private Region selected = null;
+
+    @FXML
+    void newGame() {
+    	System.out.println("New Game");
+    }
+
+    @FXML
+    void resign() {
+    	System.out.println("Resign");
+    }
 	public void initialize() {
 		resetBoard();
 	}
