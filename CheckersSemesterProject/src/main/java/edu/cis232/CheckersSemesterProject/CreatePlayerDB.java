@@ -16,7 +16,7 @@ public class CreatePlayerDB {
 
 			dropTables(conn);
 
-			createEmployeeTable(conn);
+			createPlayerTable(conn);
 
 			conn.close();
 		} catch (Exception e) {
@@ -33,9 +33,9 @@ public class CreatePlayerDB {
 
 			try {
 				stmt.execute("DROP TABLE Player");
-				System.out.println("Employee table dropped.");
+				System.out.println("Player table dropped.");
 			} catch (SQLException e) {
-				System.out.println("Employee table did not exist.");
+				System.out.println("Player table did not exist.");
 			}
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
@@ -43,7 +43,7 @@ public class CreatePlayerDB {
 		}
 	}
 
-	public static void createEmployeeTable(Connection conn) {
+	public static void createPlayerTable(Connection conn) {
 
 		try {
 			Statement stmt = conn.createStatement();
@@ -52,7 +52,7 @@ public class CreatePlayerDB {
 					     				+ 	 "Wins Integer ,"
 					     				+ 	 "Loses Integer)");
 			
-			String sql = "INSERT INTO  (PlayerName, Wins, Loses) VALUES (?, ?, ?)";
+			String sql = "INSERT INTO Player(PlayerName, Wins, Loses) VALUES (?, ?, ?)";
 			
 			PreparedStatement createTable = conn.prepareStatement(sql);
 			
