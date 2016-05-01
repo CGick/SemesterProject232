@@ -1,6 +1,8 @@
 package edu.cis232.CheckersSemesterProject;
 
-import javafx.event.ActionEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -54,17 +56,48 @@ public class MainController {
     private final int COLUMN = 8, ROW = 8;
     private Region selected = null;
 
-    @FXML
-    void newGame() {
-    	System.out.println("New Game");
-    }
-
-    @FXML
-    void resign() {
-    	System.out.println("Resign");
-    }
 	public void initialize() {
 		resetBoard();
+		addPlayer1();
+		addPlayer2();
+	}
+	
+	@FXML
+	void newGame() {
+		System.out.println("New Game");
+	}
+	
+	@FXML
+	void resign() {
+		System.out.println("Resign");
+	}
+	
+	@FXML
+	void addPlayer1(){
+		ResultSet player1 = PlayerDBAccessor.lookUpPlayer("Chris Gick");
+		try {
+			player1.next();
+			lblPlayer1Name.setText(player1.getString("PlayerName"));
+			lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d",
+					player1.getInt("Wins"), player1.getInt("Loses")));
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	
+	@FXML
+	void addPlayer2(){
+		ResultSet player2 = PlayerDBAccessor.lookUpPlayer("Dan Rusk");
+		try {
+			player2.next();
+			lblPlayer2Name.setText(player2.getString("PlayerName"));
+			lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d",
+					player2.getInt("Wins"), player2.getInt("Loses")));
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	private void resetBoard() {
