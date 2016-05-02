@@ -74,6 +74,7 @@ public class MainController {
 	
 	@FXML
 	void addPlayer1(){
+		//hard coded for testing
 		ResultSet player1 = PlayerDBAccessor.lookUpPlayer("Chris Gick");
 		try {
 			player1.next();
@@ -88,7 +89,9 @@ public class MainController {
 	
 	@FXML
 	void addPlayer2(){
+		//hard coded for testing
 		ResultSet player2 = PlayerDBAccessor.lookUpPlayer("Dan Rusk");
+		
 		try {
 			player2.next();
 			lblPlayer2Name.setText(player2.getString("PlayerName"));
