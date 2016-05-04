@@ -19,6 +19,9 @@ public class MainController {
 
     @FXML
     private GridPane grid;
+    
+    @FXML
+    private Label lblStatus;
 
     @FXML
     private VBox player1VBox;
@@ -146,5 +149,6 @@ public class MainController {
 				}
 			}
 		}
+		lblStatus.setText("Player 1: Make your move!");
 	}
 }
