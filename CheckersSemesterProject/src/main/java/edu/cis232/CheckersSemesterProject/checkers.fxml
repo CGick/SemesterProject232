@@ -75,5 +75,10 @@
           <MenuItem fx:id="mnuResign" mnemonicParsing="false" onAction="#resign" text="Resign" />
         </items>
       </MenuButton>
+      <Label fx:id="lblStatus" layoutX="628.0" layoutY="10.0" prefHeight="49.0" prefWidth="397.0" textFill="#050dae">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
