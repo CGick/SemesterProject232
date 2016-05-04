@@ -15,15 +15,21 @@ public class Player
 	
 	public void setPlayer(String player){
 		ResultSet player1 = PlayerDBAccessor.lookUpPlayer(player);
+	
 		try {
-			player1.next();
-			this.player = player1.getString("PlayerName");
-			this.wins = player1.getInt("Wins");
-			this.loses = player1.getInt("Loses");
+			if(player1.next()){
+				this.player = player1.getString("PlayerName");
+				this.wins = player1.getInt("Wins");
+				this.loses = player1.getInt("Loses");
+			}else{
+				PlayerDBAccessor.addPlayer(player);
+				setPlayer(player);
+			}
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
+		
 	}
 	public String getPlayer()
 	{
