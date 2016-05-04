@@ -52,7 +52,7 @@ public class MainController {
     
     Image redChecker = new BetterImage("RedCheckerPiece.png");
     Image blackChecker = new BetterImage("BlackCheckerPiece.png");
-    
+    Player player1, player2;
     private final int COLUMN = 8, ROW = 8;
     private Region selected = null;
 
@@ -74,17 +74,10 @@ public class MainController {
 	
 	@FXML
 	void addPlayer1(){
-		//hard coded for testing
-		ResultSet player1 = PlayerDBAccessor.lookUpPlayer("Chris Gick");
-		try {
-			player1.next();
-			lblPlayer1Name.setText(player1.getString("PlayerName"));
-			lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d",
-					player1.getInt("Wins"), player1.getInt("Loses")));
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+//		player1 = new Player
+//		lblPlayer1Name.setText(player1.getString("PlayerName"));
+//		lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d",
+//				player1.getInt("Wins"), player1.getInt("Loses")));
 	}
 	
 	@FXML
