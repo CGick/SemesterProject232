@@ -21,7 +21,6 @@ public class App extends Application{
 		arg0.setScene(scene);
 		arg0.setTitle("Checkers");
 		arg0.setResizable(false);
-		arg0.show();
-		
+		arg0.show();		
 	}
 }

@@ -2,7 +2,7 @@ package edu.cis232.CheckersSemesterProject;
 
 public class KingPiece extends Piece 
 {
-	private String name;
+	protected static final int RED_KING = 2, BLACK_KING = 4;
 	
 	public KingPiece (String name)
 	{

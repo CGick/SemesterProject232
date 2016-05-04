@@ -2,8 +2,8 @@ package edu.cis232.CheckersSemesterProject;
 
 public class CheckersMove 
 {
-	private int prevRow, prevCol;  // Position of piece to be moved.
-	private int nextRow, nextCol;      // Square it is to move to.
+	protected int prevRow, prevCol;  // Position of piece to be moved.
+	protected int nextRow, nextCol;      // Square it is to move to.
 	
 	/**
 	* @param int r1

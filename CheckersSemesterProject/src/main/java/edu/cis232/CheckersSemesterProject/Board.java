@@ -3,10 +3,9 @@ package edu.cis232.CheckersSemesterProject;
 public class Board 
 {
 	private boolean gameInProgress;
-	private String currentPlayer;
+	private int currentPlayer, selectedRow, selectedCol;
 	private CheckersData board;
-	private PawnPiece pawn;
-	private KingPiece king;
+	public CheckersMove[] legalMoves;
 	private Player player1, player2;
 	
 	public Board()
@@ -22,11 +21,11 @@ public class Board
 	
 	public void resign()
 	{
-		if (currentPlayer.equals(player1.getPlayer()))
+		if (currentPlayer == PawnPiece.RED)
 		{
 			
 		}
-		else if (currentPlayer.equals(player2.getPlayer()))
+		else if (currentPlayer == PawnPiece.BLACK)
 		{
 			
 		}
@@ -36,5 +35,10 @@ public class Board
 	public void gameOver()
 	{
 		gameInProgress = false;
+	}
+	
+	public void makeMove (CheckersMove move)
+	{
+		
 	}
 }

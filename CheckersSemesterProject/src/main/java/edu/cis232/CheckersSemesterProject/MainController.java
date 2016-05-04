@@ -58,8 +58,8 @@ public class MainController {
 
 	public void initialize() {
 		resetBoard();
-		addPlayer1();
-		addPlayer2();
+		//addPlayer1();
+		//addPlayer2();
 	}
 	
 	@FXML
@@ -144,7 +144,4 @@ public class MainController {
 			}
 		}
 	}
-	
-	
-
 }
