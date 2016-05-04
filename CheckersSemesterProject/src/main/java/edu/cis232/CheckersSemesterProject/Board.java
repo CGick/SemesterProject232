@@ -6,12 +6,10 @@ public class Board
 	private int currentPlayer, selectedRow, selectedCol;
 	private CheckersData board;
 	public CheckersMove[] legalMoves;
-	private Player player1, player2;
 	
 	public Board()
 	{
-		player1 = new Player("Player1");
-		player2 = new Player("Player2");
+		board.newGame();
 	}
 	
 	public void newGame()

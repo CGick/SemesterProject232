@@ -107,8 +107,6 @@ public class MainController {
 	}
 
 	private void resetBoard() {	    
-	    Board board = new Board();
-	    CheckersData game = new CheckersData();
 		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
@@ -144,7 +142,6 @@ public class MainController {
 								{				
 									ImageView image = (ImageView)selected.getChildren().remove(0);
 									a.getChildren().add(image);
-									System.out.println(GridPane.getRowIndex(selected));	
 								}
 							}
 							a.setStyle("-fx-background-color: #7AFFE7");
