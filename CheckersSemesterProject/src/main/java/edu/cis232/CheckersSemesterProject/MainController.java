@@ -58,17 +58,16 @@ public class MainController {
 	@FXML
 	private Label lblStatus;
 
-	
 	Image redChecker = new BetterImage("RedCheckerPiece.png");
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
 	Player player1, player2;
 	private final int COLUMN = 8, ROW = 8;
-	private Region selected = null;
+	private AnchorPane selected = null;
 
 	public void initialize() {
 		resetBoard();
-		 addPlayer1();
-		 addPlayer2();
+		addPlayer1();
+		addPlayer2();
 	}
 
 	@FXML
@@ -84,40 +83,42 @@ public class MainController {
 	@FXML
 	void addPlayer1() {
 		String name = JOptionPane.showInputDialog("Enter Player1 Name");
-		 player1 = new Player(name);
-		 lblPlayer1Name.setText(player1.getPlayer());
-		 lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d",
-		 player1.getWins(), player1.getLoses()));
+		player1 = new Player(name);
+		lblPlayer1Name.setText(player1.getPlayer());
+		lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d", player1.getWins(), player1.getLoses()));
+
 	}
 
 	@FXML
 	void addPlayer2() {
 		String name = JOptionPane.showInputDialog("Enter Player2 Name");
-		 player2 = new Player(name);
-		 lblPlayer2Name.setText(player2.getPlayer());
-		 lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d",
-		 player2.getWins(), player2.getLoses()));
+		player2 = new Player(name);
+		lblPlayer2Name.setText(player2.getPlayer());
+		lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
 	}
 
 	private void resetBoard() {
+		Board board = new Board();
+		CheckersData game = new CheckersData();
 		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
 				AnchorPane p = new AnchorPane();
-				ImageView img = new ImageView();
-				img.setFitHeight(90.00);
-				img.setFitWidth(90.00);
-				final int row = r, col = c;
-				AnchorPane.setTopAnchor(img, 5.0);
-				AnchorPane.setRightAnchor(img, 5.0);
-				AnchorPane.setBottomAnchor(img, 5.0);
-				AnchorPane.setLeftAnchor(img, 5.0);
-				p.getChildren().add(img);
+
 				if (r % 2 == c % 2) {
 					p.setStyle("-fx-background-color: red");
 					grid.add(p, c, r);
-
 				} else {
+					ImageView img = new ImageView();
+					img.setFitHeight(90.00);
+					img.setFitWidth(90.00);
+					final int row = r, col = c;
+					AnchorPane.setTopAnchor(img, 5.0);
+					AnchorPane.setRightAnchor(img, 5.0);
+					AnchorPane.setBottomAnchor(img, 5.0);
+					AnchorPane.setLeftAnchor(img, 5.0);
+					p.getChildren().add(img);
+
 					p.setStyle("-fx-background-color: black");
 					p.setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -128,14 +129,22 @@ public class MainController {
 							if (selected != null) {
 
 								selected.setStyle("-fx-background-color: black");
-							}
+
+								if (!selected.getChildren().isEmpty()) {
+									ImageView image = (ImageView) selected.getChildren().remove(0);
+									a.getChildren().add(image);
+									System.out.println(GridPane.getRowIndex(selected));
+								}
+							} 
 							a.setStyle("-fx-background-color: #7AFFE7");
 							selected = a;
 						}
 					});
 					if (r < 3) {
 						img.setImage(blackChecker);
+
 					} else if (r > 4) {
+
 						img.setImage(redChecker);
 					}
 					grid.add(p, c, r);
