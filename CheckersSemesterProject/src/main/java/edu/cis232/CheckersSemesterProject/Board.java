@@ -9,11 +9,16 @@ public class Board
 	
 	public Board()
 	{
+		board = new CheckersData();
 		board.newGame();
 	}
 	
 	public void newGame()
 	{
+		if (gameInProgress)
+		{
+			System.out.println("Game in progress");
+		}
 		gameInProgress = true;
 	}
 	
