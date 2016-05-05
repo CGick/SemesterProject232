@@ -97,6 +97,7 @@ public class MainController {
 		lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
 	}
 
+	
 	private void resetBoard() {
 		Board board = new Board();
 		CheckersData game = new CheckersData();
@@ -120,26 +121,7 @@ public class MainController {
 					p.getChildren().add(img);
 
 					p.setStyle("-fx-background-color: black");
-					p.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-						@Override
-						public void handle(MouseEvent evt) {
-							System.out.printf("%d, %d%n", row, col);
-							AnchorPane a = (AnchorPane) evt.getSource();
-							if (selected != null) {
-
-								selected.setStyle("-fx-background-color: black");
-
-								if (!selected.getChildren().isEmpty()) {
-									ImageView image = (ImageView) selected.getChildren().remove(0);
-									a.getChildren().add(image);
-									System.out.println(GridPane.getRowIndex(selected));
-								}
-							} 
-							a.setStyle("-fx-background-color: #7AFFE7");
-							selected = a;
-						}
-					});
+					setupMouseClickListener(p, row, col);
 					if (r < 3) {
 						img.setImage(blackChecker);
 
@@ -152,5 +134,28 @@ public class MainController {
 			}
 		}
 		lblStatus.setText("Player 1: Make your move!");
+	}
+
+	private void setupMouseClickListener(AnchorPane p, final int row, final int col) {
+		p.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent evt) {
+				System.out.printf("%d, %d%n", row, col);
+				AnchorPane a = (AnchorPane) evt.getSource();
+				if (selected != null) {
+
+					selected.setStyle("-fx-background-color: black");
+
+					if (!selected.getChildren().isEmpty()) {
+						ImageView image = (ImageView) selected.getChildren().remove(0);
+						a.getChildren().add(image);
+						System.out.println(GridPane.getRowIndex(selected));
+					}
+				} 
+				a.setStyle("-fx-background-color: #7AFFE7");
+				selected = a;
+			}
+		});
 	}
 }
