@@ -3,110 +3,103 @@ package edu.cis232.CheckersSemesterProject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class MainController {
 
-    @FXML
-    private GridPane grid;
-    
-    @FXML
-    private Label lblStatus;
+	@FXML
+	private GridPane grid;
 
-    @FXML
-    private VBox player1VBox;
+	@FXML
+	private VBox player1VBox;
 
-    @FXML
-    private AnchorPane anchPanePlayer1;
+	@FXML
+	private AnchorPane anchPanePlayer1;
 
-    @FXML
-    private Label lblPlayer1Name;
+	@FXML
+	private Label lblPlayer1Name;
 
-    @FXML
-    private Label lblPlayer1Stats;
+	@FXML
+	private Label lblPlayer1Stats;
 
-    @FXML
-    private VBox player2VBox;
+	@FXML
+	private VBox player2VBox;
 
-    @FXML
-    private AnchorPane anchPanePlayer2;
+	@FXML
+	private AnchorPane anchPanePlayer2;
 
-    @FXML
-    private Label lblPlayer2Name;
+	@FXML
+	private Label lblPlayer2Name;
 
-    @FXML
-    private Label lblPlayer2Stats;
+	@FXML
+	private Label lblPlayer2Stats;
 
-    @FXML
-    private MenuItem mnuNewGame;
+	@FXML
+	private MenuItem mnuNewGame;
 
-    @FXML
-    private MenuItem mnuResign;
+	@FXML
+	private MenuItem mnuResign;
 
-    Image redChecker = new BetterImage("RedCheckerPiece.png");
-    Image blackChecker = new BetterImage("BlackCheckerPiece.png");
-    
-    private final int COLUMN = 8, ROW = 8;
-    private AnchorPane selected = null;
+	@FXML
+	private Label lblStatus;
+
+	Image redChecker = new BetterImage("RedCheckerPiece.png");
+	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
+	Player player1, player2;
+	private final int COLUMN = 8, ROW = 8;
+	private AnchorPane selected = null;
 
 	public void initialize() {
 		resetBoard();
-		//addPlayer1();
-		//addPlayer2();
+		addPlayer1();
+		addPlayer2();
 	}
-	
+
 	@FXML
 	void newGame() {
 		System.out.println("New Game");
 	}
-	
+
 	@FXML
 	void resign() {
 		System.out.println("Resign");
 	}
-	
+
 	@FXML
-	void addPlayer1(){
-		//hard coded for testing
-		ResultSet player1 = PlayerDBAccessor.lookUpPlayer("Chris Gick");
-		try {
-			player1.next();
-			lblPlayer1Name.setText(player1.getString("PlayerName"));
-			lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d",
-					player1.getInt("Wins"), player1.getInt("Loses")));
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-	}
-	
-	@FXML
-	void addPlayer2(){
-		//hard coded for testing
-		ResultSet player2 = PlayerDBAccessor.lookUpPlayer("Dan Rusk");
-		
-		try {
-			player2.next();
-			lblPlayer2Name.setText(player2.getString("PlayerName"));
-			lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d",
-					player2.getInt("Wins"), player2.getInt("Loses")));
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
+	void addPlayer1() {
+		String name = JOptionPane.showInputDialog("Enter Player1 Name");
+		player1 = new Player(name);
+		lblPlayer1Name.setText(player1.getPlayer());
+		lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d", player1.getWins(), player1.getLoses()));
+
 	}
 
-	private void resetBoard() {	    
+	@FXML
+	void addPlayer2() {
+		String name = JOptionPane.showInputDialog("Enter Player2 Name");
+		player2 = new Player(name);
+		lblPlayer2Name.setText(player2.getPlayer());
+		lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
+	}
+
+	private void resetBoard() {
+		Board board = new Board();
+		CheckersData game = new CheckersData();
 		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
@@ -115,9 +108,7 @@ public class MainController {
 				if (r % 2 == c % 2) {
 					p.setStyle("-fx-background-color: red");
 					grid.add(p, c, r);
-					
-				}
-				else {
+				} else {
 					ImageView img = new ImageView();
 					img.setFitHeight(90.00);
 					img.setFitWidth(90.00);
@@ -127,31 +118,33 @@ public class MainController {
 					AnchorPane.setBottomAnchor(img, 5.0);
 					AnchorPane.setLeftAnchor(img, 5.0);
 					p.getChildren().add(img);
+
 					p.setStyle("-fx-background-color: black");
-					p.setOnMousePressed(new EventHandler <MouseEvent>()
-					{						
+					p.setOnMousePressed(new EventHandler<MouseEvent>() {
+
 						@Override
 						public void handle(MouseEvent evt) {
 							System.out.printf("%d, %d%n", row, col);
-							AnchorPane a = (AnchorPane)evt.getSource();
-							if(selected != null){
-								
+							AnchorPane a = (AnchorPane) evt.getSource();
+							if (selected != null) {
+
 								selected.setStyle("-fx-background-color: black");
-								
-								if (!selected.getChildren().isEmpty())
-								{				
-									ImageView image = (ImageView)selected.getChildren().remove(0);
+
+								if (!selected.getChildren().isEmpty()) {
+									ImageView image = (ImageView) selected.getChildren().remove(0);
 									a.getChildren().add(image);
+									System.out.println(GridPane.getRowIndex(selected));
 								}
-							}
+							} 
 							a.setStyle("-fx-background-color: #7AFFE7");
 							selected = a;
 						}
 					});
-					if(r < 3){
+					if (r < 3) {
 						img.setImage(blackChecker);
-						
-					}else if(r > 4){
+
+					} else if (r > 4) {
+
 						img.setImage(redChecker);
 					}
 					grid.add(p, c, r);
