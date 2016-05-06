@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -71,17 +72,23 @@ public class MainController {
 
 	public void initialize() {
 		resetBoard();
+		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
 //		addPlayer1();
 //		addPlayer2();
 	}
 
 	@FXML
-	void newGame() {
+    void newGame(ActionEvent event) {
 		System.out.println("New Game");
-	}
+		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
+		mnuResign.setDisable(false); //Resign from game
+		resetBoard();
+    }
 
 	@FXML
-	void resign() {
+	void resign(ActionEvent event) {
+		mnuNewGame.setDisable(false); //Enables button to start a new game, if wanted to.
+		mnuResign.setDisable(true); //Can't resign when a game ins't in progress.
 		System.out.println("Resign");
 	}
 
