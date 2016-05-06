@@ -145,7 +145,7 @@ public class MainController {
 	}
 
 	private void setupMouseClickListener(AnchorPane p, final int row, final int col) {
-		p.setOnMouseClicked(new EventHandler<MouseEvent>() {			
+		p.setOnMousePressed(new EventHandler<MouseEvent>() {			
 
 			@Override
 			public void handle(MouseEvent evt) {
@@ -159,10 +159,11 @@ public class MainController {
 					{
 						System.out.println("Player 1");
 						lblStatus.setText("Player 1: Make your move!");
-						ImageView image = (ImageView) selected.getChildren().remove(0);
-						a.getChildren().add(image);
-						System.out.println(GridPane.getRowIndex(selected));					
-						
+						if (!selected.getChildren().isEmpty()){
+							ImageView image = (ImageView) selected.getChildren().remove(0);
+							a.getChildren().add(image);
+							System.out.println(GridPane.getRowIndex(selected));																	
+						}
 						player = false;
 					}
 					
