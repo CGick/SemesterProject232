@@ -1,6 +1,6 @@
 package edu.cis232.CheckersSemesterProject;
 
-public class CheckersMove 
+public class CheckersMove implements GameBoard
 {
 	protected int prevRow, prevCol;  // Position of piece to be moved.
 	protected int nextRow, nextCol;      // Square it is to move to.

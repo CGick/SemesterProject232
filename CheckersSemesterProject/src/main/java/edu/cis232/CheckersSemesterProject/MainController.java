@@ -61,8 +61,13 @@ public class MainController {
 	Image redChecker = new BetterImage("RedCheckerPiece.png");
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
 	Player player1, player2;
+	public CheckersMove[] legal;
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
+	private Board board;
+	private CheckersData game;
+	private boolean player = true;
+	private ImageView[][] i = new ImageView[8][8];
 
 	public void initialize() {
 		resetBoard();
@@ -99,8 +104,10 @@ public class MainController {
 
 	
 	private void resetBoard() {
-		Board board = new Board();
-		CheckersData game = new CheckersData();
+		board = new Board();
+		game = new CheckersData();
+		game.newGame();
+		game.getBoard();
 		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
@@ -124,6 +131,7 @@ public class MainController {
 					setupMouseClickListener(p, row, col);
 					if (r < 3) {
 						img.setImage(blackChecker);
+//						i[r][c] = blackChecker;
 
 					} else if (r > 4) {
 
@@ -137,25 +145,51 @@ public class MainController {
 	}
 
 	private void setupMouseClickListener(AnchorPane p, final int row, final int col) {
-		p.setOnMousePressed(new EventHandler<MouseEvent>() {
+		p.setOnMousePressed(new EventHandler<MouseEvent>() {			
 
 			@Override
 			public void handle(MouseEvent evt) {
-				System.out.printf("%d, %d%n", row, col);
 				AnchorPane a = (AnchorPane) evt.getSource();
+				//a.setStyle("-fx-background-color: #7AFFE7");
+				//System.out.printf("%d, %d%n", row, col);
 				if (selected != null) {
-
 					selected.setStyle("-fx-background-color: black");
 
-					if (!selected.getChildren().isEmpty()) {
+					if (player)
+					{
+						System.out.println("Player 1");
 						ImageView image = (ImageView) selected.getChildren().remove(0);
 						a.getChildren().add(image);
-						System.out.println(GridPane.getRowIndex(selected));
+						System.out.println(GridPane.getRowIndex(selected));					
+						
+						player = false;
 					}
+					
+					else if (!player)
+					{
+						System.out.println("Player 2");
+						if (!selected.getChildren().isEmpty()) {
+							ImageView image = (ImageView) selected.getChildren().remove(0);
+							a.getChildren().add(image);
+							System.out.println(GridPane.getRowIndex(selected));					
+						}
+						player = true;
+					}
+					
+
 				} 
 				a.setStyle("-fx-background-color: #7AFFE7");
 				selected = a;
 			}
+			
 		});
+	}
+	
+	private void runGame()
+	{
+		boolean gameInProgress;
+		int currentPlayer, selectedRow, selectedCol;
+		CheckersData board;
+		CheckersMove[] legalMoves;		
 	}
 }
