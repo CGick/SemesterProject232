@@ -107,7 +107,7 @@ public class MainController {
 		board = new Board();
 		game = new CheckersData();
 		game.newGame();
-		game.getBoard();
+		game.getBoard(); //Test to make sure the board array is generated correctly
 		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
@@ -145,7 +145,7 @@ public class MainController {
 	}
 
 	private void setupMouseClickListener(AnchorPane p, final int row, final int col) {
-		p.setOnMousePressed(new EventHandler<MouseEvent>() {			
+		p.setOnMouseClicked(new EventHandler<MouseEvent>() {			
 
 			@Override
 			public void handle(MouseEvent evt) {
@@ -158,6 +158,7 @@ public class MainController {
 					if (player)
 					{
 						System.out.println("Player 1");
+						lblStatus.setText("Player 1: Make your move!");
 						ImageView image = (ImageView) selected.getChildren().remove(0);
 						a.getChildren().add(image);
 						System.out.println(GridPane.getRowIndex(selected));					
@@ -168,6 +169,7 @@ public class MainController {
 					else if (!player)
 					{
 						System.out.println("Player 2");
+						lblStatus.setText("Player 2: Make your move!");
 						if (!selected.getChildren().isEmpty()) {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							a.getChildren().add(image);
