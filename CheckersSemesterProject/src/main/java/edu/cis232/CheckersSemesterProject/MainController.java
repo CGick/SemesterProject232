@@ -65,21 +65,32 @@ public class MainController {
 	public CheckersMove[] legal;
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
-	private Board board;
+	private Board gameBoard;
 	private CheckersData game;
 	private boolean player = true;
-	private ImageView[][] i = new ImageView[8][8];
 
 	public void initialize() {
 		resetBoard();
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
-//		addPlayer1();
-//		addPlayer2();
+		addPlayer1();
+		addPlayer2();
 	}
 
 	@FXML
     void newGame(ActionEvent event) {
 		System.out.println("New Game");
+		player = true;
+		if (JOptionPane.showConfirmDialog(null, "Want to use the same players?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
+		{
+			System.out.println("Keeping current players!");
+		} 
+		else 
+		{
+			System.out.println("Using different players!");
+			addPlayer1();
+			addPlayer2();
+		}
+		lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
 		mnuResign.setDisable(false); //Resign from game
 		resetBoard();
@@ -87,6 +98,14 @@ public class MainController {
 
 	@FXML
 	void resign(ActionEvent event) {
+		if (player)
+		{
+			lblStatus.setText(player1.getPlayer() + " resigns, " + player2.getPlayer() + " wins!");
+		}
+		else
+		{
+			lblStatus.setText(player2.getPlayer() + " resigns, " + player1.getPlayer() + " wins!");
+		}
 		mnuNewGame.setDisable(false); //Enables button to start a new game, if wanted to.
 		mnuResign.setDisable(true); //Can't resign when a game ins't in progress.
 		System.out.println("Resign");
@@ -94,27 +113,44 @@ public class MainController {
 
 	@FXML
 	void addPlayer1() {
-		String name = JOptionPane.showInputDialog("Enter Player1 Name");
-		player1 = new Player(name);
-		lblPlayer1Name.setText(player1.getPlayer());
-		lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d", player1.getWins(), player1.getLoses()));
-
+		try
+		{
+			String name = JOptionPane.showInputDialog("Enter Player1 Name");
+			if (name == null || name.equals(""))
+				throw new InvalidPlayerInputException();
+			player1 = new Player(name);
+			lblPlayer1Name.setText(player1.getPlayer());
+			lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d", player1.getWins(), player1.getLoses()));
+		}
+		catch (InvalidPlayerInputException e)
+		{
+			JOptionPane.showMessageDialog(null, "You must enter a player name!");
+			addPlayer1();
+		}		
 	}
 
 	@FXML
 	void addPlayer2() {
-		String name = JOptionPane.showInputDialog("Enter Player2 Name");
-		player2 = new Player(name);
-		lblPlayer2Name.setText(player2.getPlayer());
-		lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
+		try 
+		{
+			String name = JOptionPane.showInputDialog("Enter Player2 Name");
+			if(name == null || name.equals(""))
+				throw new InvalidPlayerInputException();
+			player2 = new Player(name);
+			lblPlayer2Name.setText(player2.getPlayer());
+			lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
+		}
+		catch (InvalidPlayerInputException e)
+		{
+			JOptionPane.showMessageDialog(null, "You must enter a player name!");
+			addPlayer2();			
+		}
 	}
 
 	
 	private void resetBoard() {
-		board = new Board();
-		game = new CheckersData();
-		game.newGame();
-		game.getBoard(); //Test to make sure the board array is generated correctly
+		gameBoard = new Board();
+		gameBoard.getBoard(); //Test to make sure the board array is generated correctly
 		grid.getChildren().clear();
 		for (int r = 0; r < ROW; r++) {
 			for (int c = 0; c < COLUMN; c++) {
@@ -148,27 +184,29 @@ public class MainController {
 				}
 			}
 		}
-		lblStatus.setText("Player 1: Make your move!");
 	}
 
 	private void setupMouseClickListener(AnchorPane p, final int row, final int col) {
 		p.setOnMousePressed(new EventHandler<MouseEvent>() {			
-
+			
 			@Override
 			public void handle(MouseEvent evt) {
 				AnchorPane a = (AnchorPane) evt.getSource();
 				//a.setStyle("-fx-background-color: #7AFFE7");
-				//System.out.printf("%d, %d%n", row, col);
+				System.out.printf("%d, %d%n", row, col);
 				if (selected != null) {
 					selected.setStyle("-fx-background-color: black");
 
 					if (player)
 					{
 						System.out.println("Player 1");
-						lblStatus.setText("Player 1: Make your move!");
+						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
+							if (image.getImage() != null && image.getImage().equals(redChecker))
+								System.out.println("Red Checker!");	
 							a.getChildren().add(image);
+							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
 							System.out.println(GridPane.getRowIndex(selected));																	
 						}
 						player = false;
@@ -177,29 +215,26 @@ public class MainController {
 					else if (!player)
 					{
 						System.out.println("Player 2");
-						lblStatus.setText("Player 2: Make your move!");
+						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()) {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
+							if (image.getImage() != null && image.getImage().equals(blackChecker))
+								System.out.println("Black Checker!");
 							a.getChildren().add(image);
 							System.out.println(GridPane.getRowIndex(selected));					
 						}
 						player = true;
 					}
-					
-
 				} 
 				a.setStyle("-fx-background-color: #7AFFE7");
 				selected = a;
-			}
-			
+			}		
 		});
 	}
 	
-	private void runGame()
+	//Helper
+	private void clickSquare(int r, int c)
 	{
-		boolean gameInProgress;
-		int currentPlayer, selectedRow, selectedCol;
-		CheckersData board;
-		CheckersMove[] legalMoves;		
+		//gameBoard.clickSquare(r, c);
 	}
 }

@@ -5,12 +5,13 @@ public class Board
 	private boolean gameInProgress;
 	private int currentPlayer, selectedRow, selectedCol;
 	private CheckersData board;
+	private PawnPiece pawn;
+	private KingPiece king;
 	public CheckersMove[] legalMoves;
 	
 	public Board()
 	{
 		board = new CheckersData();
-		board.newGame();
 	}
 	
 	public void newGame()
@@ -19,7 +20,15 @@ public class Board
 		{
 			System.out.println("Game in progress");
 		}
+		board.newGame();
+		currentPlayer = pawn.RED;
+		legalMoves = board.getValidMoves(pawn.RED);
 		gameInProgress = true;
+	}
+	
+	public void getBoard()
+	{
+		board.getBoard();
 	}
 	
 	public void resign()
@@ -41,6 +50,34 @@ public class Board
 	public void gameOver(String str) 
 	{
 		gameInProgress = false;
+	}
+	
+	public void clickSquare(int row, int col)
+	{
+		for (int i = 0; i < legalMoves.length; i++)
+		{
+			if (legalMoves[i].prevRow == row && legalMoves[i].prevCol == col) 
+			{
+				selectedRow = row;
+				selectedCol = col;
+                System.out.println(selectedRow);
+                System.out.println(selectedCol);
+				return;
+			}
+	}
+		//Prompts the user to select a piece to move
+		if (selectedRow < 0)
+		{
+			return;
+		}
+
+		//If the piece can move, it proceeds to move
+		for (int i = 0; i < legalMoves.length; i++)
+		if (legalMoves[i].prevRow == selectedRow && legalMoves[i].prevCol == selectedCol && legalMoves[i].nextRow == row && legalMoves[i].nextCol == col) 
+		{
+			makeMove(legalMoves[i]);
+			return;
+		}
 	}
 	
 	
