@@ -116,8 +116,6 @@ public class Board
 			if (legalMoves == null)
 			{
 				gameOver("Player2 has no moves.  Player1 wins.");
-				//start.updateScorePlayer1(p1.getId(), true); //WILL NOT WORK CURRENTLY
-				//start.updateScorePlayer2(p2.getId(), false); //WILL NOT WORK CURRENTLY
 			}
 			else if (legalMoves[0].isJump())
 				System.out.println("");
@@ -133,8 +131,6 @@ public class Board
 			if (legalMoves == null)
 			{
 				gameOver("Player1 has no moves.  Player2 wins.");
-				//start.updateScorePlayer1(p1.getId(), false); //WILL NOT WORK CURRENTLY
-				//start.updateScorePlayer2(p2.getId(), true); //WILL NOT WORK CURRENTLY
 			}
 			else if (legalMoves[0].isJump())
 				System.out.println("");

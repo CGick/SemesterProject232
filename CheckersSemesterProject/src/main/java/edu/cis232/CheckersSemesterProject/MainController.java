@@ -66,7 +66,6 @@ public class MainController {
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
 	private Board gameBoard;
-	private CheckersData game;
 	private boolean player = true;
 
 	public void initialize() {
