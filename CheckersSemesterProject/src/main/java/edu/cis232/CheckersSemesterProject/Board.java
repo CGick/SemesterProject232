@@ -47,7 +47,7 @@ public class Board
 	/**
 	* Resets the board to begin a new game
 	*/
-	public void gameOver(String str) 
+	public void gameOver() 
 	{
 		gameInProgress = false;
 	}
@@ -109,36 +109,7 @@ public class Board
 		Get that player's legal moves.  If the player has no legal moves,
 		then the game ends. */
 
-		if (currentPlayer == PawnPiece.RED) 
-		{
-			currentPlayer = PawnPiece.BLACK;
-			legalMoves = board.getValidMoves(currentPlayer);
-			if (legalMoves == null)
-			{
-				gameOver("Player2 has no moves.  Player1 wins.");
-			}
-			else if (legalMoves[0].isJump())
-				System.out.println("");
-				//message.setText("Player2:  Make your move.  You must jump.");
-			else
-				System.out.println("");
-				//message.setText("Player2:  Make your move.");
-		}
-		else 
-		{
-			currentPlayer = PawnPiece.RED;
-			legalMoves = board.getValidMoves(currentPlayer);
-			if (legalMoves == null)
-			{
-				gameOver("Player1 has no moves.  Player2 wins.");
-			}
-			else if (legalMoves[0].isJump())
-				System.out.println("");
-				//message.setText("Player1:  Make your move.  You must jump.");
-			else
-				System.out.println("");
-				//message.setText("Player1:  Make your move.");
-		}
+		switchPlayer();
 
 		selectedRow = -1; //User hasn't selected move
 
@@ -157,6 +128,41 @@ public class Board
 				selectedRow = legalMoves[0].prevRow;
 				selectedCol = legalMoves[0].prevCol;
 			}
+		}
+	}
+
+	private void switchPlayer() {
+		if (currentPlayer == PawnPiece.RED) 
+		{
+			currentPlayer = PawnPiece.BLACK;
+			legalMoves = board.getValidMoves(currentPlayer);
+			if (legalMoves == null)
+			{
+				gameOver();
+				
+			}
+			else if (legalMoves[0].isJump())
+				System.out.println("");
+				//message.setText("Player2:  Make your move.  You must jump.");
+			else
+				System.out.println("");
+				//message.setText("Player2:  Make your move.");
+		}
+		else 
+		{
+			currentPlayer = PawnPiece.RED;
+			legalMoves = board.getValidMoves(currentPlayer);
+			if (legalMoves == null)
+			{
+				gameOver();
+				
+			}
+			else if (legalMoves[0].isJump())
+				System.out.println("");
+				//message.setText("Player1:  Make your move.  You must jump.");
+			else
+				System.out.println("");
+				//message.setText("Player1:  Make your move.");
 		}
 	}
 }
