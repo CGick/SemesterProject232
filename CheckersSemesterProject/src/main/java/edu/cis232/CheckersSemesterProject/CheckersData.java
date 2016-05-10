@@ -14,6 +14,25 @@ public class CheckersData
 		newGame();
 	}
 	
+	
+	public boolean checkJump (int row, int col)
+	{
+		if (board[row][col] == 0)
+		{
+			System.out.println("Valid move!");
+			return true;
+		}
+		return false;
+	}
+	
+	public void makeJump(int row, int col, boolean player)
+	{
+		if (player)
+			board[row][col] = pawn.RED;
+		else
+			board[row][col] = pawn.BLACK;
+	}
+	
 	/**
 	 * Tests to see if the board is generated correctly.
 	 */

@@ -66,7 +66,6 @@ public class MainController {
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
 	private Board gameBoard;
-	private CheckersData game;
 	private boolean player = true;
 
 	public void initialize() {
@@ -202,6 +201,8 @@ public class MainController {
 				a.setStyle("-fx-background-color: #7AFFE7");
 				//gameBoard.clickSquare(row, col);
 				if (selected != null) {
+					gameBoard.setPrevious(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
+					gameBoard.getPrevious();
 					selected.setStyle("-fx-background-color: black");
 
 					if (player)
@@ -211,10 +212,9 @@ public class MainController {
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
-								System.out.println("Red Checker!");	
+								System.out.println("Red Checker!");
 							a.getChildren().add(image);
-							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
-							System.out.println(GridPane.getRowIndex(selected));																	
+							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));																	
 						}
 						player = false;
 					}
@@ -227,8 +227,7 @@ public class MainController {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(blackChecker))
 								System.out.println("Black Checker!");
-							a.getChildren().add(image);
-							System.out.println(GridPane.getRowIndex(selected));					
+							a.getChildren().add(image);				
 						}
 						player = true;
 					}
@@ -242,6 +241,6 @@ public class MainController {
 	//Helper
 	private void clickSquare(int r, int c)
 	{
-		//gameBoard.clickSquare(r, c);
+		gameBoard.click(r, c);
 	}
 }

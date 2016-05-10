@@ -3,7 +3,7 @@ package edu.cis232.CheckersSemesterProject;
 public class Board 
 {
 	private boolean gameInProgress;
-	private int currentPlayer, selectedRow, selectedCol;
+	private int currentPlayer, selectedRow, selectedCol, previousRow, previousColumn;
 	private CheckersData board;
 	private PawnPiece pawn;
 	private KingPiece king;
@@ -32,6 +32,18 @@ public class Board
 		board.getBoard();
 	}
 	
+	public void setPrevious(int row, int col)
+	{
+		previousRow = row;
+		previousColumn = col;
+	}
+	
+	public void getPrevious()
+	{
+		System.out.println("Previous row: " + previousRow + "\nPrevious column: " + previousColumn);
+	}
+
+	
 	public void resign()
 	{
 		if (currentPlayer == PawnPiece.RED)
@@ -43,6 +55,11 @@ public class Board
 			
 		}
 		gameInProgress = false;
+	}
+	
+	public boolean click(int row, int col)
+	{
+		return (board.checkJump(row, col));
 	}
 	
 	/**
