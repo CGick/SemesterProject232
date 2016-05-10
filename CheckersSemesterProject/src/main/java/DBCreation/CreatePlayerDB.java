@@ -77,7 +77,7 @@ public class CreatePlayerDB {
 			
 			createTable.execute();
 			
-			System.out.println("Employee table created.");
+			System.out.println("Player table created.");
 			
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());

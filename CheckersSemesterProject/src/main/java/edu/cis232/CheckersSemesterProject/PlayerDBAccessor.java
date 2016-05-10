@@ -60,8 +60,8 @@ public class PlayerDBAccessor {
 			
 			PreparedStatement update = conn.prepareStatement(sql);
 			
-			update.setString(1, "\"" + wins + "\"" );
-			update.setString(2, "\"" + loses + "\"" );
+			update.setString(1, String.valueOf(wins));
+			update.setString(2, String.valueOf(loses));
 			update.setString(3, player);
 			
 			update.execute();

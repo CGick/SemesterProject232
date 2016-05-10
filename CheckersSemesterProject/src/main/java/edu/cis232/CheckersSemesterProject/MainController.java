@@ -74,8 +74,15 @@ public class MainController {
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
 		addPlayer1();
 		addPlayer2();
+		endGame();
 	}
 
+	public void endGame(){
+		player1.addLose();
+		player2.addWin();
+		player1.updatePlayer();
+		player2.updatePlayer();
+	}
 	@FXML
     void newGame(ActionEvent event) {
 		System.out.println("New Game");
@@ -192,15 +199,15 @@ public class MainController {
 			@Override
 			public void handle(MouseEvent evt) {
 				AnchorPane a = (AnchorPane) evt.getSource();
-				//a.setStyle("-fx-background-color: #7AFFE7");
-				System.out.printf("%d, %d%n", row, col);
+				a.setStyle("-fx-background-color: #7AFFE7");
+				//gameBoard.clickSquare(row, col);
 				if (selected != null) {
 					selected.setStyle("-fx-background-color: black");
 
 					if (player)
 					{
 						System.out.println("Player 1");
-						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
+						//lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
@@ -215,7 +222,7 @@ public class MainController {
 					else if (!player)
 					{
 						System.out.println("Player 2");
-						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
+						//lblStatus.setText(player2.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()) {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(blackChecker))

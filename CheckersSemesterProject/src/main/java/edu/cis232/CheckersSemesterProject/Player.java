@@ -44,6 +44,16 @@ public class Player
 		return loses;
 	}
 	
+	public void addWin(){
+		wins++;
+	}
+	public void addLose(){
+		loses++;
+	}
+	
+	public void updatePlayer(){
+		PlayerDBAccessor.updatePlayer(player, wins, loses);
+	}
 	public String toString()
 	{
 		return "";
