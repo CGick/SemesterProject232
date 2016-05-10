@@ -1,3 +1,9 @@
+/**
+ * REQ#1 & REQ#9
+ * creates and javafx GUI
+ * displays the names of the group members when the program executes.
+ * 
+ */
 package edu.cis232.CheckersSemesterProject;
 
 import javafx.application.Application;
@@ -19,7 +25,8 @@ public class App extends Application{
 		Scene scene = new Scene(parent);
 		
 		arg0.setScene(scene);
-		arg0.setTitle("Checkers");
+		//REQ#1
+		arg0.setTitle("Checkers by Chris Gick and James Williams");
 		arg0.setResizable(false);
 		arg0.show();		
 	}

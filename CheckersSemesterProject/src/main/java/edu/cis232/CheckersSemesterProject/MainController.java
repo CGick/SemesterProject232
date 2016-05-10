@@ -1,24 +1,17 @@
 package edu.cis232.CheckersSemesterProject;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class MainController {
@@ -62,6 +55,7 @@ public class MainController {
 	Image redChecker = new BetterImage("RedCheckerPiece.png");
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
 	Player player1, player2;
+	StringBuilder sb;
 	public CheckersMove[] legal;
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
@@ -127,6 +121,10 @@ public class MainController {
 		System.out.println("Resign");
 	}
 
+	/**
+	 * REQ#2
+	 * uses a string builder to set the wins and loses of each player
+	 */
 	@FXML
 	void addPlayer1() {
 		try
@@ -136,7 +134,8 @@ public class MainController {
 				throw new InvalidPlayerInputException();
 			player1 = new Player(name);
 			lblPlayer1Name.setText(player1.getPlayer());
-			lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d", player1.getWins(), player1.getLoses()));
+			sb = new StringBuilder("Wins: " + String.valueOf(player1.getWins()) + ", Loses: " + String.valueOf(player1.getLoses()));
+			lblPlayer1Stats.setText(sb.toString());
 		}
 		catch (InvalidPlayerInputException e)
 		{
@@ -145,6 +144,10 @@ public class MainController {
 		}		
 	}
 
+	/**
+	 * REQ#2
+	 * uses a string builder to set the wins and loses of each player
+	 */
 	@FXML
 	void addPlayer2() {
 		try 
@@ -154,7 +157,8 @@ public class MainController {
 				throw new InvalidPlayerInputException();
 			player2 = new Player(name);
 			lblPlayer2Name.setText(player2.getPlayer());
-			lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
+			sb = new StringBuilder("Wins: " + String.valueOf(player2.getWins()) + ", Loses: " + String.valueOf(player2.getLoses()));
+			lblPlayer2Stats.setText(sb.toString());
 		}
 		catch (InvalidPlayerInputException e)
 		{

@@ -1,3 +1,7 @@
+/**
+ * REQ#7 & REQ#8 & REQ#11
+ * class hold static methods for storing, accessing, and modifying data in the player database
+ */
 package edu.cis232.CheckersSemesterProject;
 
 import java.sql.Connection;
