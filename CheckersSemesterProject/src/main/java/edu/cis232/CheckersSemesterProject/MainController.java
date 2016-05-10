@@ -73,12 +73,19 @@ public class MainController {
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
 		addPlayer1();
 		addPlayer2();
-		endGame();
 	}
 
 	public void endGame(){
-		player1.addLose();
-		player2.addWin();
+		if (player)
+		{
+			player1.addLose();
+			player2.addWin();
+		}
+		else if (!player)
+		{
+			player2.addLose();
+			player1.addWin();
+		}
 		player1.updatePlayer();
 		player2.updatePlayer();
 	}
@@ -112,6 +119,9 @@ public class MainController {
 		{
 			lblStatus.setText(player2.getPlayer() + " resigns, " + player1.getPlayer() + " wins!");
 		}
+		endGame();
+		lblPlayer1Stats.setText(String.format("Wins: %d, Loses: %d", player1.getWins(), player1.getLoses()));
+		lblPlayer2Stats.setText(String.format("Wins: %d, Loses: %d", player2.getWins(), player2.getLoses()));
 		mnuNewGame.setDisable(false); //Enables button to start a new game, if wanted to.
 		mnuResign.setDisable(true); //Can't resign when a game ins't in progress.
 		System.out.println("Resign");
@@ -180,8 +190,6 @@ public class MainController {
 					setupMouseClickListener(p, row, col);
 					if (r < 3) {
 						img.setImage(blackChecker);
-//						i[r][c] = blackChecker;
-
 					} else if (r > 4) {
 
 						img.setImage(redChecker);
@@ -193,36 +201,39 @@ public class MainController {
 	}
 
 	private void setupMouseClickListener(AnchorPane p, final int row, final int col) {
-		p.setOnMousePressed(new EventHandler<MouseEvent>() {			
-			
+		p.setOnMousePressed(new EventHandler<MouseEvent>() {						
 			@Override
 			public void handle(MouseEvent evt) {
 				AnchorPane a = (AnchorPane) evt.getSource();
 				a.setStyle("-fx-background-color: #7AFFE7");
-				//gameBoard.clickSquare(row, col);
+				
 				if (selected != null) {
 					gameBoard.setPrevious(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
 					gameBoard.getPrevious();
 					selected.setStyle("-fx-background-color: black");
-
 					if (player)
 					{
+						gameBoard.clickSquare(row, col);
 						System.out.println("Player 1");
-						//lblStatus.setText(player1.getPlayer() + ":  Make your move!");
+						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
+							{
 								System.out.println("Red Checker!");
-							a.getChildren().add(image);
-							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));																	
+								a.getChildren().add(image);
+							}
+							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));	
+							System.out.println("-----------------------------------------");
 						}
 						player = false;
 					}
 					
 					else if (!player)
 					{
+						gameBoard.clickSquare(row, col);
 						System.out.println("Player 2");
-						//lblStatus.setText(player2.getPlayer() + ":  Make your move!");
+						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()) {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(blackChecker))
