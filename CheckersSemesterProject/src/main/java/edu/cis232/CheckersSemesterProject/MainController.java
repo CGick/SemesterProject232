@@ -71,8 +71,8 @@ public class MainController {
 	public void initialize() {
 		resetBoard();
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
-		addPlayer1();
-		addPlayer2();
+		//addPlayer1();
+		//addPlayer2();
 	}
 
 	@FXML
@@ -194,19 +194,20 @@ public class MainController {
 				//a.setStyle("-fx-background-color: #7AFFE7");
 				System.out.printf("%d, %d%n", row, col);
 				if (selected != null) {
+					gameBoard.setPrevious(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
+					gameBoard.getPrevious();
 					selected.setStyle("-fx-background-color: black");
 
 					if (player)
 					{
 						System.out.println("Player 1");
-						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
+						//lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
-								System.out.println("Red Checker!");	
+								System.out.println("Red Checker!");
 							a.getChildren().add(image);
-							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
-							System.out.println(GridPane.getRowIndex(selected));																	
+							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));																	
 						}
 						player = false;
 					}
@@ -214,13 +215,12 @@ public class MainController {
 					else if (!player)
 					{
 						System.out.println("Player 2");
-						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
+						//lblStatus.setText(player2.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()) {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(blackChecker))
 								System.out.println("Black Checker!");
-							a.getChildren().add(image);
-							System.out.println(GridPane.getRowIndex(selected));					
+							a.getChildren().add(image);				
 						}
 						player = true;
 					}
@@ -234,6 +234,6 @@ public class MainController {
 	//Helper
 	private void clickSquare(int r, int c)
 	{
-		//gameBoard.clickSquare(r, c);
+		gameBoard.click(r, c);
 	}
 }
