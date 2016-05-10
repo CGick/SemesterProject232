@@ -1,3 +1,7 @@
+/**
+ * REQ#7 & REQ#11
+ * Creates a database to store player data
+ */
 package DBCreation;
 
 import java.sql.Connection;
