@@ -71,22 +71,16 @@ public class Board
 	}
 	
 	public void clickSquare(int row, int col)
-	{
-		
+	{		
 		for (int i = 0; i < legalMoves.length; i++)
 		{
 			if (legalMoves[i].prevRow == row && legalMoves[i].prevCol == col) 
 			{
 				selectedRow = row;
 				selectedCol = col;
-				System.out.println(selectedRow);
-				System.out.println(selectedCol);
+				System.out.println("Selected row: " + selectedRow);
+				System.out.println("Selected column: " + selectedCol);
 			}
-	}
-		//Prompts the user to select a piece to move
-		if (selectedRow < 0)
-		{
-			
 		}
 
 		//If the piece can move, it proceeds to move

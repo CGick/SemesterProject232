@@ -56,12 +56,14 @@ public class MainController {
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
 	Player player1, player2;
 	StringBuilder sb;
-	public CheckersMove[] legal;
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
 	private Board gameBoard;
-	private boolean player = true;
+	private boolean player;
 
+	/**
+	 * Initilizes the players and game board.
+	 */
 	public void initialize() {
 		resetBoard();
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
@@ -69,6 +71,9 @@ public class MainController {
 		addPlayer2();
 	}
 
+	/**
+	 * Adds a win or lose to the players 
+	 */
 	public void endGame(){
 		if (player)
 		{
@@ -83,8 +88,14 @@ public class MainController {
 		player1.updatePlayer();
 		player2.updatePlayer();
 	}
+	
+	/**
+	 * Starts a new game.
+	 * @param event
+	 */
 	@FXML
     void newGame(ActionEvent event) {
+		selected = null;
 		System.out.println("New Game");
 		player = true;
 		if (JOptionPane.showConfirmDialog(null, "Want to use the same players?", "", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) 
@@ -103,6 +114,10 @@ public class MainController {
 		resetBoard();
     }
 
+	/**
+	 * Resigns the current player
+	 * @param event
+	 */
 	@FXML
 	void resign(ActionEvent event) {
 		if (player)
@@ -119,6 +134,7 @@ public class MainController {
 		mnuNewGame.setDisable(false); //Enables button to start a new game, if wanted to.
 		mnuResign.setDisable(true); //Can't resign when a game ins't in progress.
 		System.out.println("Resign");
+		selected = null;
 	}
 
 	/**
@@ -167,8 +183,11 @@ public class MainController {
 		}
 	}
 
-	
+	/**
+	 * Sets up the board after newGame is clicked or the game starts up.
+	 */
 	private void resetBoard() {
+		player = true;
 		gameBoard = new Board();
 		gameBoard.getBoard(); //Test to make sure the board array is generated correctly
 		grid.getChildren().clear();
@@ -194,6 +213,8 @@ public class MainController {
 					setupMouseClickListener(p, row, col);
 					if (r < 3) {
 						img.setImage(blackChecker);
+//						i[r][c] = blackChecker;
+
 					} else if (r > 4) {
 
 						img.setImage(redChecker);
@@ -210,32 +231,27 @@ public class MainController {
 			public void handle(MouseEvent evt) {
 				AnchorPane a = (AnchorPane) evt.getSource();
 				a.setStyle("-fx-background-color: #7AFFE7");
-				
+				//gameBoard.clickSquare(row, col);
 				if (selected != null) {
 					gameBoard.setPrevious(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
 					gameBoard.getPrevious();
 					selected.setStyle("-fx-background-color: black");
+
 					if (player)
 					{
-						gameBoard.clickSquare(row, col);
 						System.out.println("Player 1");
 						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
-							{
 								System.out.println("Red Checker!");
-								a.getChildren().add(image);
-							}
-							clickSquare(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));	
-							System.out.println("-----------------------------------------");
+							a.getChildren().add(image);																
 						}
 						player = false;
 					}
 					
 					else if (!player)
 					{
-						gameBoard.clickSquare(row, col);
 						System.out.println("Player 2");
 						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()) {
@@ -251,11 +267,5 @@ public class MainController {
 				selected = a;
 			}		
 		});
-	}
-	
-	//Helper
-	private void clickSquare(int r, int c)
-	{
-		gameBoard.click(r, c);
 	}
 }
