@@ -55,7 +55,7 @@ public class MainController {
 	Image redChecker = new BetterImage("RedCheckerPiece.png");
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
 	Player player1, player2;
-	StringBuilder sb;
+	StringBuilder sb; //REQ#2 StringBuilder
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
 	private Board gameBoard;
@@ -150,12 +150,12 @@ public class MainController {
 				throw new InvalidPlayerInputException();
 			player1 = new Player(name);
 			lblPlayer1Name.setText(player1.getPlayer());
-			sb = new StringBuilder("Wins: " + String.valueOf(player1.getWins()) + ", Loses: " + String.valueOf(player1.getLoses()));
+			sb = new StringBuilder("Wins: " + String.valueOf(player1.getWins()) + ", Loses: " + String.valueOf(player1.getLoses())); //REQ#2 StringBuilder
 			lblPlayer1Stats.setText(sb.toString());
 		}
 		catch (InvalidPlayerInputException e)
 		{
-			JOptionPane.showMessageDialog(null, "You must enter a player name!");
+			JOptionPane.showMessageDialog(null, "You must enter a player name!"); //REQ #12 Custom Exception
 			addPlayer1();
 		}		
 	}
@@ -173,12 +173,12 @@ public class MainController {
 				throw new InvalidPlayerInputException();
 			player2 = new Player(name);
 			lblPlayer2Name.setText(player2.getPlayer());
-			sb = new StringBuilder("Wins: " + String.valueOf(player2.getWins()) + ", Loses: " + String.valueOf(player2.getLoses()));
+			sb = new StringBuilder("Wins: " + String.valueOf(player2.getWins()) + ", Loses: " + String.valueOf(player2.getLoses())); //REQ#2 StringBuilder
 			lblPlayer2Stats.setText(sb.toString());
 		}
 		catch (InvalidPlayerInputException e)
 		{
-			JOptionPane.showMessageDialog(null, "You must enter a player name!");
+			JOptionPane.showMessageDialog(null, "You must enter a player name!"); //REQ #12 Custom Exception
 			addPlayer2();			
 		}
 	}
