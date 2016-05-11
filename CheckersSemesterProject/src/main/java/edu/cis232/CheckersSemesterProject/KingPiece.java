@@ -8,9 +8,10 @@ public class KingPiece extends Piece
 	{
 		super(name);
 	}
-	
+		
+	@Override
 	public String toString()
 	{
-		return "";
+		return getName();
 	}
 }

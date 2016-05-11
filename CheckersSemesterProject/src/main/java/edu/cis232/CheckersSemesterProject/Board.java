@@ -1,6 +1,6 @@
 package edu.cis232.CheckersSemesterProject;
-
-public class Board 
+//REQ #5 interface usage
+public class Board implements GameBoard
 {
 	private boolean gameInProgress;
 	private int currentPlayer, selectedRow, selectedCol, previousRow, previousColumn;
@@ -83,6 +83,7 @@ public class Board
 	/**
 	* Called when the user clicked on a valid move location
 	*/
+	//REQ #5 interface usage
 	public void makeMove(CheckersMove move) 
 	{
 		board.makeMove(move);        

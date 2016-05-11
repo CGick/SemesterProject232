@@ -2,7 +2,6 @@
  * REQ#1 & REQ#9
  * creates and javafx GUI
  * displays the names of the group members when the program executes.
- * 
  */
 package edu.cis232.CheckersSemesterProject;
 

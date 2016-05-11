@@ -1,7 +1,7 @@
 package edu.cis232.CheckersSemesterProject;
 
 import java.util.ArrayList;
-
+//REQ #5 interface usage
 public class CheckersData implements GameBoard
 {
 	private KingPiece king; //Holds pawn constants for pieces
@@ -110,6 +110,7 @@ public class CheckersData implements GameBoard
 	 * 
 	 * @param move CheckersMove
 	 */
+	//REQ #5 interface usage
 	public void makeMove (CheckersMove move)
 	{
 		makeMove(move.prevRow, move.prevCol, move.nextRow, move.nextCol);
@@ -323,12 +324,5 @@ public class CheckersData implements GameBoard
 				return false;
 			return true;  
 		}
-	}
-
-	@Override
-	public boolean canJump() 
-	{
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
