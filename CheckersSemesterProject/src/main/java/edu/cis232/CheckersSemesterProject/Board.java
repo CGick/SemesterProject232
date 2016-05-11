@@ -42,25 +42,6 @@ public class Board
 	{
 		System.out.println("Previous row: " + previousRow + "\nPrevious column: " + previousColumn);
 	}
-
-	
-	public void resign()
-	{
-		if (currentPlayer == PawnPiece.RED)
-		{
-			
-		}
-		else if (currentPlayer == PawnPiece.BLACK)
-		{
-			
-		}
-		gameInProgress = false;
-	}
-	
-	public boolean click(int row, int col)
-	{
-		return (board.checkJump(row, col));
-	}
 	
 	/**
 	* Resets the board to begin a new game
@@ -70,6 +51,12 @@ public class Board
 		gameInProgress = false;
 	}
 	
+	/**
+	 * Assigns the selected row and column
+	 * 
+	 * @param row int
+	 * @param col int
+	 */
 	public void clickSquare(int row, int col)
 	{		
 		for (int i = 0; i < legalMoves.length; i++)
@@ -101,7 +88,7 @@ public class Board
 		board.makeMove(move);        
 
 		//If the player can jump more, the game forces the user to.
-		if (move.isJump()) 
+		if (move.canJump()) 
 		{
 			legalMoves = board.getValidJumps(currentPlayer,move.nextRow,move.nextCol);
 			if (legalMoves != null) 
@@ -143,6 +130,9 @@ public class Board
 		}
 	}
 
+	/**
+	 * Switches the player with the logical board.
+	 */
 	private void switchPlayer() {
 		if (currentPlayer == PawnPiece.RED) 
 		{
@@ -153,7 +143,7 @@ public class Board
 				gameOver();
 				
 			}
-			else if (legalMoves[0].isJump())
+			else if (legalMoves[0].canJump())
 				System.out.println("");
 				//message.setText("Player2:  Make your move.  You must jump.");
 			else
@@ -169,7 +159,7 @@ public class Board
 				gameOver();
 				
 			}
-			else if (legalMoves[0].isJump())
+			else if (legalMoves[0].canJump())
 				System.out.println("");
 				//message.setText("Player1:  Make your move.  You must jump.");
 			else

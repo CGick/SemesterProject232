@@ -54,12 +54,12 @@ public class MainController {
 
 	Image redChecker = new BetterImage("RedCheckerPiece.png");
 	Image blackChecker = new BetterImage("BlackCheckerPiece.png");
-	Player player1, player2;
+	Player player1, player2; //Players
 	StringBuilder sb; //REQ#2 StringBuilder
 	private final int COLUMN = 8, ROW = 8;
 	private AnchorPane selected = null;
 	private Board gameBoard;
-	private boolean player;
+	private boolean player; //Switches the player
 
 	/**
 	 * Initilizes the players and game board.
@@ -69,17 +69,20 @@ public class MainController {
 		mnuNewGame.setDisable(true); //Can't start a new game in progress, must resign first.
 		addPlayer1();
 		addPlayer2();
+		lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 	}
 
 	/**
 	 * Adds a win or lose to the players 
 	 */
 	public void endGame(){
+		//If player1 resigns add lose, add win to player2.
 		if (player)
 		{
 			player1.addLose();
 			player2.addWin();
 		}
+		//If player2 resigns add lose, add win to player1.
 		else if (!player)
 		{
 			player2.addLose();
@@ -233,14 +236,12 @@ public class MainController {
 				a.setStyle("-fx-background-color: #7AFFE7");
 				//gameBoard.clickSquare(row, col);
 				if (selected != null) {
-					gameBoard.setPrevious(GridPane.getRowIndex(selected), GridPane.getColumnIndex(selected));
-					gameBoard.getPrevious();
 					selected.setStyle("-fx-background-color: black");
 
 					if (player)
 					{
 						System.out.println("Player 1");
-						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
+						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()){
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
@@ -253,7 +254,7 @@ public class MainController {
 					else if (!player)
 					{
 						System.out.println("Player 2");
-						lblStatus.setText(player2.getPlayer() + ":  Make your move!");
+						lblStatus.setText(player1.getPlayer() + ":  Make your move!");
 						if (!selected.getChildren().isEmpty()) {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(blackChecker))

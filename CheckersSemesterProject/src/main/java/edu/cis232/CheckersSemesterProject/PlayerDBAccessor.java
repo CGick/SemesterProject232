@@ -14,6 +14,11 @@ public class PlayerDBAccessor {
 
 	private final static String DB_URL = "jdbc:hsqldb:file:Player/player;hsqldb.lock_file=false";
 
+	/**
+	 * Adds a player
+	 * 
+	 * @param player String
+	 */
 	public static void addPlayer(String player) {
 		try {
 			Connection conn = DriverManager.getConnection(DB_URL);
@@ -34,6 +39,12 @@ public class PlayerDBAccessor {
 		}
 	}
 	
+	/**
+	 * Looks for a player and returns it
+	 * 
+	 * @param player
+	 * @return ResultSet
+	 */
 	public static ResultSet lookUpPlayer(String player){
 		ResultSet result;
 		try{
@@ -56,6 +67,13 @@ public class PlayerDBAccessor {
 		return result;
 	}
 	
+	/**
+	 * Updates the player
+	 * 
+	 * @param player String
+	 * @param wins int
+	 * @param loses int
+	 */
 	public static void updatePlayer(String player, int wins, int loses){
 		try{
 			Connection conn = DriverManager.getConnection(DB_URL);

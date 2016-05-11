@@ -14,11 +14,18 @@ import javafx.stage.Stage;
 
 public class App extends Application{
     
+	/**
+	 * Launches the application
+	 * @param args
+	 */
 	public static void main(String[] args ){
         launch(args);
     }
 
 	@Override
+	/**
+	 * Creates the stage to display the program.
+	 */
 	public void start(Stage arg0) throws Exception {
 		Parent parent = FXMLLoader.load(MainController.class.getResource("checkers.fxml"));
 		

@@ -2,20 +2,29 @@ package edu.cis232.CheckersSemesterProject;
 
 import java.util.ArrayList;
 
-public class CheckersData 
+public class CheckersData implements GameBoard
 {
 	private KingPiece king; //Holds pawn constants for pieces
 	private PawnPiece pawn; //Holds king constants for peices
 	private int[][] board;
 	
+	/**
+	 * Creates a new Checkerdata board;
+	 */
 	public CheckersData()
 	{
 		board = new int[8][8];
 		newGame();
 	}
 	
-	
-	public boolean checkJump (int row, int col)
+	/**
+	 * Checks if the player can jump, temporary test method.
+	 * 
+	 * @param row int
+	 * @param col int
+	 * @return boolean
+	 */
+	public boolean canJump (int row, int col)
 	{
 		if (board[row][col] == 0)
 		{
@@ -25,6 +34,13 @@ public class CheckersData
 		return false;
 	}
 	
+	/**
+	 * Makes the jump, sets the cordinates given to the array.
+	 * 
+	 * @param row int
+	 * @param col int
+	 * @param player boolean
+	 */
 	public void makeJump(int row, int col, boolean player)
 	{
 		if (player)
@@ -48,6 +64,9 @@ public class CheckersData
 		}
 	}
 	
+	/**
+	 * Restarts the board to the default state
+	 */
 	public void newGame()
 	{
         for (int row = 0; row < 8; row++) 
@@ -71,16 +90,39 @@ public class CheckersData
         }		
 	}
 	
+	/**
+	 * Returns the piece at the selected row and column
+	 * 
+	 * @param row int
+	 * @param col int
+	 * @return int
+	 */
 	public int pieceAt(int row, int col)
 	{
 		return board[row][col];
 	}
 	
+	/**
+	 * Makes the move using the previous selected row and column
+	 * and moves it to the next row and column
+	 * 
+	 * Helper method
+	 * 
+	 * @param move CheckersMove
+	 */
 	public void makeMove (CheckersMove move)
 	{
 		makeMove(move.prevRow, move.prevCol, move.nextRow, move.nextCol);
 	}
 	
+	/**
+	 * Makes the move
+	 * 
+	 * @param prevRow int
+	 * @param prevCol int 
+	 * @param nextRow int
+	 * @param nextCol int
+	 */
 	public void makeMove(int prevRow, int prevCol, int nextRow, int nextCol) 
 	{
 		board[nextRow][nextCol] = board[prevRow][prevCol];
@@ -100,7 +142,7 @@ public class CheckersData
 	
 	/**
 	* @return CheckersMove[] moveArray
-	* Returns all avaliable moves
+	* Returns all avaliable moves, including jumps.
 	*/
 	public CheckersMove[] getValidMoves(int player) 
 	{
@@ -172,9 +214,13 @@ public class CheckersData
 	}
 	
 	/**
-	* @return moveArray
-	* Returns all possible jumps
-	*/
+	 * Returns all possible jumps with a CheckersMove array.
+	 * 
+	 * @param player int
+	 * @param row int
+	 * @param col int
+	 * @return CheckersMove
+	 */
 	public CheckersMove[] getValidJumps(int player, int row, int col) 
 	{
 		if (player != pawn.RED && player != pawn.BLACK)
@@ -210,7 +256,16 @@ public class CheckersData
 	/**
 	* Determines the player can jump
 	* Looks ahead 2 spaces in directions NE, NW, SE, SW. 
-	*/
+	 * 
+	 * @param player int
+	 * @param r1 int
+	 * @param c1 int
+	 * @param r2 int
+	 * @param c2 int
+	 * @param r3 int
+	 * @param c3 int
+	 * @return boolean
+	 */
 	public boolean canJump(int player, int r1, int c1, int r2, int c2, int r3, int c3) 
 	{    
 		if (r3 < 0 || r3 >= 8 || c3 < 0 || c3 >= 8)
@@ -241,7 +296,14 @@ public class CheckersData
 	/**
 	* Looks to see if any avaliable moves
 	* Looks ahead 1 space to see if there is an empty spot or not off the grid
-	*/
+	 * 
+	 * @param player int
+	 * @param r1 int
+	 * @param c1 int
+	 * @param r2 int
+	 * @param c2 int 
+	 * @return boolean
+	 */
 	public boolean canMove(int player, int r1, int c1, int r2, int c2) 
 	{     
 		if (r2 < 0 || r2 >= 8 || c2 < 0 || c2 >= 8)
@@ -261,5 +323,12 @@ public class CheckersData
 				return false;
 			return true;  
 		}
+	}
+
+	@Override
+	public boolean canJump() 
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -19,7 +19,7 @@ public class CheckersMove implements GameBoard
 		nextCol = c2;
 	}
 
-	public boolean isJump() 
+	public boolean canJump() 
 	{
 		return (prevRow - nextRow == 2 || prevRow - nextRow == -2);
 	}
