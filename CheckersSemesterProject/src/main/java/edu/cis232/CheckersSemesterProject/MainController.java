@@ -60,6 +60,7 @@ public class MainController {
 	private AnchorPane selected = null;
 	private Board gameBoard;
 	private boolean player; //Switches the player
+	private int pCount;
 
 	/**
 	 * Initilizes the players and game board.
@@ -190,6 +191,7 @@ public class MainController {
 	 * Sets up the board after newGame is clicked or the game starts up.
 	 */
 	private void resetBoard() {
+		pCount = 0;
 		player = true;
 		gameBoard = new Board();
 		gameBoard.getBoard(); //Test to make sure the board array is generated correctly
@@ -246,9 +248,14 @@ public class MainController {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(redChecker))
 								System.out.println("Red Checker!");
-							a.getChildren().add(image);																
+							a.getChildren().add(image);	
+							pCount++;
 						}
-						player = false;
+						if (pCount == 2)
+						{
+							player = false;
+							pCount = 0;
+						}
 					}
 					
 					else if (!player)
@@ -259,9 +266,14 @@ public class MainController {
 							ImageView image = (ImageView) selected.getChildren().remove(0);
 							if (image.getImage() != null && image.getImage().equals(blackChecker))
 								System.out.println("Black Checker!");
-							a.getChildren().add(image);				
+							a.getChildren().add(image);	
+							pCount++;
 						}
-						player = true;
+						if (pCount == 2)
+						{
+							player = true;
+							pCount = 0;
+						}
 					}
 				} 
 				a.setStyle("-fx-background-color: #7AFFE7");
